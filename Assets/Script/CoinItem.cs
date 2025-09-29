@@ -8,6 +8,7 @@ public class CoinItem : InteractablObject
 {
     [Header("동전 설정")]
     public int coinValue = 10;
+    public string questTag = "Coin";
 
     // Unity 메세지 | 참조 3개
     protected override void Start()
@@ -18,10 +19,15 @@ public class CoinItem : InteractablObject
         interactionType = InteractionType.Item;
     }
 
-    // 참조 3개
+   
     protected override void CollectItem()
     {
-        transform.Rotate(Vector3.up * 360f);
+
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.AddCollectProgress(questTag);
+        }
+        transform.Rotate(Vector3.up * 180f);
         Destroy(gameObject, 0.5f);
     }
 
